@@ -8,9 +8,9 @@ export class CatRouter extends Router {
         super();
         this.catController = new CatController();
         this.get("/cats", this.catController.getCats);
-        this.get("/cats/:name", this.catController.getCat);
+        this.get("/cats/:id", this.catController.getCat);
         this.post("/cats", this.catController.newCat);
-        this.put("/cats/:name", this.catController.updateCat);
-        this.delete("/cats/:name", this.catController.deleteCat);
+        this.put("/cats/:id", this.catController.updateCat);
+        this.delete("/cats/:id", this.catController.deleteCat);
     }
 }

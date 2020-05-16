@@ -1,0 +1,15 @@
+version: '3.8'
+services: 
+    database: 
+        image: mongo:latest
+        container_name: 'deno_demo_mongo'
+        environment: 
+            - 'MONGO_INITDB_USERNAME=captaaint'
+            - 'MONGO_INITDB_PASSWORD=secret123'
+            - 'MONGO_INITDB_DATABASE=deno-demo-db'
+        volumes:
+            - deno_demo_mongo_data:/data/db
+        ports: 
+            - 27024:27017
+volumes: 
+    deno_demo_mongo_data:
