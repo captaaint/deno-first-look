@@ -1,7 +1,8 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
-import { router as catRouter } from "./routes/cat.route.ts";
+import { CatRouter } from "./routes/cat.route.ts";
 
 const app = new Application();
+const catRouter = new CatRouter();
 
 app.use(catRouter.routes());
 app.use(catRouter.allowedMethods());
@@ -12,5 +13,4 @@ const HOST = env.HOST || "127.0.0.1";
 
 console.log("App's listening...");
 
-await app.listen(`${HOST}:${PORT}`);
-
+app.listen(`${HOST}:${PORT}`);

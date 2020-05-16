@@ -1,10 +1,16 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import { getCats } from "./../controllers/cat.controller.ts"
+import { CatController } from "./../controllers/cat.controller.ts"
 
-const router = new Router();
+export class CatRouter extends Router {
+    catController: CatController;
 
-router.get("/cats", getCats);
-
-export {
-    router
+    constructor() {
+        super();
+        this.catController = new CatController();
+        this.get("/cats", this.catController.getCats);
+        this.get("/cats/:name", this.catController.getCat);
+        this.post("/cats", this.catController.newCat);
+        this.put("/cats/:name", this.catController.updateCat);
+        this.delete("/cats/:name", this.catController.deleteCat);
+    }
 }
