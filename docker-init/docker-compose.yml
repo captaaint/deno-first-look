@@ -1,5 +1,18 @@
 version: '3.8'
+networks:
+    deno-demo:
+        name: deno-demo
 services: 
+    deno-app:
+        image: captaaintdocker/deno-demo
+        depends_on: 
+            - database
+        restart: always
+        container_name: 'deno-app'
+        ports: 
+            - 4000:4000
+        networks: 
+            - deno-demo
     database: 
         image: mongo:latest
         container_name: 'deno_demo_mongo'
@@ -10,6 +23,8 @@ services:
         volumes:
             - deno_demo_mongo_data:/data/db
         ports: 
-            - 27024:27017
+            - 27017:27017
+        networks: 
+            - deno-demo
 volumes: 
     deno_demo_mongo_data:

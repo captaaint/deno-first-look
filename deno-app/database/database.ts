@@ -21,7 +21,7 @@ class Database {
 }
 
 const dbName = Deno.env.get("DB_NAME") || "deno-demo-db";
-const dbHostUrl = Deno.env.get("DB_HOST_URL") || "mongodb://localhost:27024";
+const dbHostUrl = Deno.env.get("DB_HOST_URL") || "mongodb://deno_demo_mongo:27017";
 const db = new Database(dbName, dbHostUrl);
 db.connect();
 
