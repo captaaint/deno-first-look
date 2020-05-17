@@ -3,7 +3,7 @@ import { init, MongoClient } from "https://deno.land/x/mongo/mod.ts";
 // Initialize the plugin
 await init()
 
-class DB {
+class Database {
   public client: MongoClient;
   constructor(public dbName: string, public url: string) {
     this.dbName = dbName;
@@ -22,7 +22,7 @@ class DB {
 
 const dbName = Deno.env.get("DB_NAME") || "deno-demo-db";
 const dbHostUrl = Deno.env.get("DB_HOST_URL") || "mongodb://localhost:27024";
-const db = new DB(dbName, dbHostUrl);
+const db = new Database(dbName, dbHostUrl);
 db.connect();
 
 export default db;

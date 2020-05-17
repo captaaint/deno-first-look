@@ -12,10 +12,8 @@ export class CatController {
   }
 
   getCats = async ({ response }: { response: any }) => {
-
     try {
-      const catList = await this.cats.find();
-      response.body = catList;
+      response.body = await Cat.selectAll();
       response.status = 200;
     } catch (err) {
       console.log("Error - getCats: ", err);
@@ -26,7 +24,7 @@ export class CatController {
 
   getCat = async ({ params, response }: { params: { id: string }; response: any }) => {
     try {
-      const cat = await this.cats.findOne({ _id: { "$oid": params.id } });
+      const cat = await Cat.selectById(params.id);
       if (cat) {
         response.body = cat;
         response.status = 200;
@@ -44,10 +42,8 @@ export class CatController {
   newCat = async ({ request, response }: { request: any; response: any }) => {
     const body = await request.body();
     const cat: Cat = body.value;
-
     try {
-      const insertId = await this.cats.insertOne(cat);
-      console.log(insertId);
+      const insertId = await Cat.create(cat);
       response.body = { msg: "OK", id: insertId };
       response.status = 200;
     } catch(err) {
@@ -60,13 +56,8 @@ export class CatController {
   updateCat = async ({ params, request, response }: { params: { id: string }, request: any; response: any }) => {
     const body = await request.body();
     const { name } = body.value;
-
     try {
-      const { matchedCount, modifiedCount, upsertedId } = await this.cats.updateOne(
-        { _id: { "$oid": params.id } },
-        { $set: { name: name } }
-      );
-
+      const matchedCount = await Cat.update(params.id, name);
       if (matchedCount) {
         response.body = { msg: "Ok"};
         response.status = 200;
@@ -83,7 +74,7 @@ export class CatController {
 
   deleteCat = async ({ params, request, response }: { params: { id: string}, request: any, response: any}) => {
     try {
-      const deleteCount = await this.cats.deleteOne({ _id: { "$oid": params.id } });
+      const deleteCount = await Cat.delete(params.id);
       if (deleteCount) {
         response.body = { msg: "Ok"};
         response.status = 200;
