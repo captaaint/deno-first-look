@@ -11,6 +11,9 @@ export class CatController {
     this.cats = this.database.collection('cats'); 
   }
 
+  // @desc Get Cats
+  // @route GET /cats
+
   getCats = async ({ response }: { response: any }) => {
     try {
       response.body = await Cat.selectAll();
@@ -22,6 +25,8 @@ export class CatController {
     }
   };
 
+  // @desc Get Cat
+  // @route GET /cats/:id
   getCat = async ({ params, response }: { params: { id: string }; response: any }) => {
     try {
       const cat = await Cat.selectById(params.id);
@@ -39,6 +44,8 @@ export class CatController {
     }
   };
 
+  // @desc Add Cat
+  // @route POST /cats
   newCat = async ({ request, response }: { request: any; response: any }) => {
     const body = await request.body();
     const cat: Cat = body.value;
@@ -53,6 +60,8 @@ export class CatController {
     }
   };
 
+  // @desc Update Cat
+  // @route PUT /cats/:id
   updateCat = async ({ params, request, response }: { params: { id: string }, request: any; response: any }) => {
     const body = await request.body();
     const { name } = body.value;
@@ -72,6 +81,8 @@ export class CatController {
     }
   };
 
+  // @desc Delete Cat
+  // @route DELETE /cats/:id
   deleteCat = async ({ params, request, response }: { params: { id: string}, request: any, response: any}) => {
     try {
       const deleteCount = await Cat.delete(params.id);

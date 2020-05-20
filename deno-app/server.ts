@@ -5,6 +5,16 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 const app = new Application();
 const catRouter = new CatRouter();
 
+app.use(async ({ response }, next) => {
+  if (!response.headers) {
+    response.headers = new Headers();
+  }
+  response.headers.append("access-control-allow-origin", "*");
+  response.headers.append("access-control-allow-methods", "*");
+  response.headers.append("access-control-allow-headers", "*");
+  await next();
+});
+
 app.use(catRouter.routes());
 app.use(catRouter.allowedMethods());
 
